@@ -8,12 +8,12 @@ interface EnvConfig {
 }
 
 const loadEnvVariables = (): EnvConfig => {
-  const requiredEnvVariables = ["PORT", "DATABASE_URL", "NODE_ENV"];
+  const requiredEnvVariables: string[] = ["PORT", "DATABASE_URL", "NODE_ENV"];
   requiredEnvVariables.forEach((key) => {
     if (!process.env[key]) {
       throw new Error(`Missing required environment variable ${key}`);
     }
-  })
+  });
   return {
     PORT: process.env.PORT as string,
     DATABASE_URL: process.env.DATABASE_URL as string,
