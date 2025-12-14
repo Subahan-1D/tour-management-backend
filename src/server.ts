@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Server } from "http";
 
 import mongoose from "mongoose";
@@ -34,12 +35,44 @@ process.on("unhandledRejection", (err) => {
   process.exit(1);
 });
 
-// process.on("uncaughtException", (err) => {
-//   console.log("uncaught exception detected... Server shuting down..", err);
-//   if (server) {
-//     server.close(() => {
-//       process.exit(1);
-//     });
-//   }
-//   process.exit(1);
-// });
+process.on("uncaughtException", (err) => {
+  console.log("uncaught exception detected... Server shuting down..", err);
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+
+process.on("SIGTERM", () => {
+  console.log("SIGTERM Signal Received... Server shuting down..");
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+process.on("SIGINT", () => {
+  console.log("SIGINT Signal Received... Server shuting down..");
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+// unhandled rejection error
+// Promise.reject(new Error("I forgot catch this promise"));
+
+// uncaught rejection error
+// throw new Error("I forgot to handle this local error");
+
+// signal termination sigterm
+
+/**
+ * unhandled rejection error
+ * uncaught rejection error
+ * signal termination sigterm
+ * */
